@@ -24,3 +24,10 @@ The `StatusController` is an API controller that handles HTTP requests and respo
 Each method calls an asynchronous method to update the corresponding property in the `CpuStatusData` object. Once the update is complete, the method returns an `Ok` response with the requested data in a JSON object.
 
 The `[Route("api/[controller]")]` attribute specifies the base URL for all HTTP requests handled by this controller, and the `[ApiController]` attribute indicates that this is an API controller. The constructor injects an instance of `CpuStatusData` into the controller, which is used to retrieve the status data.
+
+## Future Plans
+I have several plans to expand the project in the future. Currently, the application only retrieves data from the computer's CPU, but I plan to include more hardware components in the future.
+
+Additionally, I plan to upload the data to Azure for analysis and to retrieve key data into the application using SQL. This will allow me to track important metrics, such as the highest temperature recorded, and analyze trends over time.
+
+Furthermore, I plan to record more in-depth data separately on the website. For example, I plan to display details for each core of the CPU, so that users can better understand their computer's performance.
