@@ -61,7 +61,7 @@ namespace PcStatusAPI
                 {
                     cpu.Update();
 
-                    ISensor loadSensor = cpu.Sensors.LastOrDefault(h => h.SensorType == SensorType.Load);
+                    ISensor? loadSensor = cpu.Sensors.LastOrDefault(h => h.SensorType == SensorType.Load);
 
                     this.CpuLoad = double.Parse(loadSensor.Value?.ToString(".0"));
                 }

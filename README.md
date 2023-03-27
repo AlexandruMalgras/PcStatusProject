@@ -1,2 +1,1 @@
-# PcStatusProject
- 
+# Computer Status V 1.0
