@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Test Frontend</title>
+    <link rel="stylesheet" type="text/css" href="./CpuStyle.css">
+</head>
+<body>
+    <div id="CpuName">
+        <span id="CpuNameText">CPU</span>
+        <label id="cpu-name-label"></label>
+    </div>
+
+    <div id="CpuLoad">
+        <div id="CpuLoadStatistics">
+            <span id="CpuLoadText">Load</span>
+            <label id="cpu-load-label"></label>
+        </div>
+        <div id="CpuLoadGraph">
+
+        </div>
+    </div>
+
+    <div id="CpuTemperature">
+        <div id="CpuTemperatureStatistics">
+            <span id="CpuTemperatureText">Temperature</span>
+            <label id="cpu-temperature-label"></label>
+        </div>
+        <div id="CpuTemperatureGraph">
+
+        </div>
+    </div>
+
+    <div id="CpuSpeed">
+        <div id="CpuSpeedStatistics">
+            <span id="CpuSpeedText">Speed</span>
+            <label id="cpu-speed-label"></label>
+        </div>
+        <div id="CpuSpeedGraph">
+
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-bar__fill"></div>
+    </div>
+
+    <script src="./CpuStatusUpdate.js"></script>
+    <script>UpdateName();</script>
+    <script>setInterval(UpdateTemperature, 1000);</script>
+    <script>setInterval(UpdateLoad, 1000);</script>
+    <script>setInterval(UpdateSpeed, 1000);</script>
+</body>
+</html>

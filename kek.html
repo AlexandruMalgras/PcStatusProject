@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        #progress-bar {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            overflow: hidden;
+        }
+
+        #progress-bar__fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            border-radius: 100% 100% 0 0;
+            background-color: #7289da;
+            transform-origin: center bottom;
+        }
+
+        /* Set the fill percentage by adjusting the rotation */
+        #progress-bar__fill {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-bar__fill"></div>
+    </div>
+</body>
+</html>

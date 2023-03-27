@@ -13,25 +13,32 @@ namespace PcStatusAPI.Controllers
             this.cpuStatusData = statusData;
         }
 
+        [HttpGet("cpu-name")]
+        public async Task<IActionResult> GetCpuName()
+        {
+            await cpuStatusData.UpdateCpuNameAsync();
+            return Ok(new { name = cpuStatusData.CpuName });
+        }
+
         [HttpGet("cpu-temperature")]
         public async Task<IActionResult> GetCpuTemperature()
         {
             await cpuStatusData.UpdateCpuTemperatureAsync();
-            return Ok(cpuStatusData.CpuTemperature);
+            return Ok(new { temperature = cpuStatusData.CpuTemperature });
         }
 
         [HttpGet("cpu-load")]
         public async Task<IActionResult> GetCpuLoad()
         {
             await cpuStatusData.UpdateCpuLoadAsync();
-            return Ok(cpuStatusData.CpuLoad);
+            return Ok(new { load = cpuStatusData.CpuLoad });
         }
 
         [HttpGet("cpu-speed")]
         public async Task<IActionResult> GetCpuSpeed()
         {
             await cpuStatusData.UpdateCpuSpeedAsync();
-            return Ok(cpuStatusData.CpuSpeed);
+            return Ok(new { speed = cpuStatusData.CpuSpeed });
         }
     }
 }

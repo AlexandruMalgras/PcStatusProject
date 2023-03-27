@@ -1,5 +1,8 @@
 using PcStatusAPI;
 using Lib.AspNetCore.ServerSentEvents;
+using Microsoft.Extensions.Options;
+
+const string allowedOrigins = "origin";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +13,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<CpuStatusData>();
-builder.Services.AddServerSentEvents();
-builder.Services.AddHostedService<CpuEventsWorker>();
+builder.Services.AddCors((options) =>
+{
+    options.AddPolicy(allowedOrigins, (policy) =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -22,12 +30,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseCors(allowedOrigins);
+
+app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapServerSentEvents("/statusUpdater");
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    Console.WriteLine("Server started");
+});
 
 app.Run();

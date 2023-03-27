@@ -6,23 +6,28 @@ namespace PcStatusAPI
 {
     public class CpuStatusData
     {
+        private Computer computer;
+        private SemaphoreSlim semaphore;
+
         public double? CpuTemperature { get; set; }
         public double? CpuLoad { get; set; }
         public double? CpuSpeed { get; set; }
-
-        private Computer computer;
+        public string CpuName { get; set; }
 
         public CpuStatusData() 
         {
-            computer = new Computer();
-            computer.CPUEnabled = true;
+            this.computer = new Computer();
+            this.computer.CPUEnabled = true;
+
+            semaphore = new SemaphoreSlim(1, 1);
         }
 
         public async Task UpdateCpuTemperatureAsync()
         {
-            await Task.Run(() =>
+            await semaphore.WaitAsync();
+            try
             {
-                computer.Open();
+                this.computer.Open();
 
                 IHardware? cpu = computer.Hardware.FirstOrDefault(h => h.HardwareType == HardwareType.CPU);
 
@@ -32,19 +37,23 @@ namespace PcStatusAPI
 
                     ISensor? temperatureSensor = cpu.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature);
 
-                    CpuTemperature = (temperatureSensor?.Value - 32) * 5 / 9;
-                    CpuTemperature = double.Parse(CpuTemperature?.ToString(".0"));
+                    this.CpuTemperature = (temperatureSensor?.Value - 32) * 5 / 9;
+                    this.CpuTemperature = double.Parse(CpuTemperature?.ToString(".0"));
                 }
-
-                computer.Close();
-            });
+            }
+            finally
+            {
+                this.computer.Close();
+                this.semaphore.Release();
+            }
         }
 
         public async Task UpdateCpuLoadAsync()
         {
-            await Task.Run(() =>
+            await this.semaphore.WaitAsync();
+            try
             {
-                computer.Open();
+                this.computer.Open();
 
                 IHardware? cpu = computer.Hardware.FirstOrDefault(h => h.HardwareType == HardwareType.CPU);
 
@@ -54,18 +63,22 @@ namespace PcStatusAPI
 
                     ISensor loadSensor = cpu.Sensors.LastOrDefault(h => h.SensorType == SensorType.Load);
 
-                    CpuLoad = double.Parse(loadSensor.Value?.ToString(".0"));
+                    this.CpuLoad = double.Parse(loadSensor.Value?.ToString(".0"));
                 }
-
-                computer.Close();
-            });
+            }
+            finally
+            {
+                this.computer.Close();
+                this.semaphore.Release();
+            }
         }
 
         public async Task UpdateCpuSpeedAsync()
         {
-            await Task.Run(() =>
+            await this.semaphore.WaitAsync();
+            try
             {
-                computer.Open();
+                this.computer.Open();
 
                 IHardware? cpu = computer.Hardware.FirstOrDefault(h => h.HardwareType == HardwareType.CPU);
 
@@ -75,18 +88,43 @@ namespace PcStatusAPI
 
                     ISensor[] speedSensors = cpu.Sensors.Where(h => h.SensorType == SensorType.Clock).ToArray();
 
-                    CpuSpeed = 0;
+                    this.CpuSpeed = 0;
 
                     for (int i = 0; i < speedSensors.Length; i++)
                     {
-                        CpuSpeed += speedSensors[i].Value;
+                        this.CpuSpeed += speedSensors[i].Value;
                     }
 
-                    CpuSpeed = CpuSpeed / 8 / 1000;
+                    this.CpuSpeed = CpuSpeed / 8 / 1000;
+                    this.CpuSpeed = double.Parse(CpuSpeed?.ToString(".00"));
                 }
+            }
+            finally
+            {
+                this.computer.Close();
+                this.semaphore.Release();
+            }
+        }
 
-                computer.Close();
-            });
+        public async Task UpdateCpuNameAsync()
+        {
+            await semaphore.WaitAsync();
+            try
+            {
+                this.computer.Open();
+
+                IHardware? cpu = computer.Hardware.FirstOrDefault(h => h.HardwareType == HardwareType.CPU);
+
+                if (cpu != null)
+                {
+                    this.CpuName = cpu.Name;
+                }
+            }
+            finally
+            {
+                this.computer.Close();
+                this.semaphore.Release();
+            }
         }
     }
 }
