@@ -14,7 +14,13 @@
     <div id="CpuLoad">
         <div id="CpuLoadStatistics">
             <span id="CpuLoadText">Load</span>
-            <label id="cpu-load-label"></label>
+            <div class="pb-load-container">
+                <div id="pb-load" class="pb-load">
+                    <div class="pb-load-value"></div>
+                    <div class="pb-load-center"></div>
+                </div>
+                <label id="cpu-load-label"></label>
+            </div>
         </div>
         <div id="CpuLoadGraph">
 
@@ -24,7 +30,13 @@
     <div id="CpuTemperature">
         <div id="CpuTemperatureStatistics">
             <span id="CpuTemperatureText">Temperature</span>
-            <label id="cpu-temperature-label"></label>
+            <div class="pb-temperature-container">
+                <div id="pb-temperature" class="pb-temperature">
+                    <div class="pb-temperature-value"></div>
+                    <div class="pb-temperature-center"></div>
+                </div>
+                <label id="cpu-temperature-label"></label>
+            </div>
         </div>
         <div id="CpuTemperatureGraph">
 
@@ -34,21 +46,23 @@
     <div id="CpuSpeed">
         <div id="CpuSpeedStatistics">
             <span id="CpuSpeedText">Speed</span>
-            <label id="cpu-speed-label"></label>
+            <div class="pb-speed-container">
+                <div id="pb-speed" class="pb-speed">
+                    <div class="pb-speed-value"></div>
+                    <div class="pb-speed-center"></div>
+                </div>
+                <label id="cpu-speed-label"></label>
+            </div>
         </div>
         <div id="CpuSpeedGraph">
 
         </div>
     </div>
 
-    <div class="progress-bar">
-        <div class="progress-bar__fill"></div>
-    </div>
-
     <script src="./CpuStatusUpdate.js"></script>
     <script>UpdateName();</script>
-    <script>setInterval(UpdateTemperature, 1000);</script>
-    <script>setInterval(UpdateLoad, 1000);</script>
-    <script>setInterval(UpdateSpeed, 1000);</script>
+    <script>setInterval(UpdateTemperature, 3000);</script>
+    <script>setInterval(UpdateLoad, 3000);</script>
+    <script>setInterval(UpdateSpeed, 3000);</script>
 </body>
 </html>

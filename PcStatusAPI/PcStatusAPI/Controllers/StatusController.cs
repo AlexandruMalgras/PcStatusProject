@@ -31,6 +31,12 @@ namespace PcStatusAPI.Controllers
         public async Task<IActionResult> GetCpuLoad()
         {
             await cpuStatusData.UpdateCpuLoadAsync();
+
+            while (cpuStatusData.CpuLoad == 0)
+            {
+                await cpuStatusData.UpdateCpuLoadAsync();
+            }
+
             return Ok(new { load = cpuStatusData.CpuLoad });
         }
 

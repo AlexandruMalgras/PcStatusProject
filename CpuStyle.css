@@ -33,9 +33,38 @@ body {
     margin: 5px;
 }
 
-#CpuLoadStatistics {
-    width: 35%;
+.pb-load-container, .pb-temperature-container, .pb-speed-container {
+    padding-left: 10px;
+    padding-top: 20px;
     display: flex;
+}
+
+.pb-load, .pb-temperature, .pb-speed {
+    width: 100px;
+    height: 50px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background: #232327;
+    overflow: hidden;
+}
+
+.pb-load-value, .pb-temperature-value, .pb-speed-value {
+    width: 100px;
+    height: 50px;
+    background: lime;
+    transform-origin: 50% 100%;
+    transform: rotate(180deg);
+}
+
+.pb-load-center, .pb-temperature-center, .pb-speed-center {
+    position: relative;
+    width: 85px;
+    height: 50px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background: #333337;
+    left: 8px;
+    top: -42px;
 }
 
 #CpuLoadGraph {
@@ -52,11 +81,6 @@ body {
     margin: 5px;
 }
 
-#CpuTemperatureStatistics {
-    width: 35%;
-    display: flex;
-}
-
 #CpuTemperatureGraph {
     background-color: #232327;
     width: 65%;
@@ -71,18 +95,26 @@ body {
     margin: 5px;
 }
 
-#CpuSpeedStatistics {
-    width: 35%;
-    display: flex;
-}
-
-#CpuSpeedGraph {
-    background-color: #232327;
-    width: 65%;
-    display: flex;
-}
 
 #CpuLoadText, #CpuTemperatureText, #CpuSpeedText {
     padding-left: 10px;
     padding-top: 10px;
+}
+
+#CpuLoadStatistics, #CpuTemperatureStatistics, #CpuSpeedStatistics {
+    width: 45%;
+    display: block;
+}
+
+#cpu-load-label, #cpu-temperature-label, #cpu-speed-label {
+    padding-left: 19px;
+    padding-top: 10px;
+    font-size: 24px;
+    color: #f4f4f6;
+}
+
+#CpuLoadGraph, #CpuTemperatureGraph, #CpuSpeedGraph {
+    background-color: #232327;
+    width: 55%;
+    display: flex;
 }
