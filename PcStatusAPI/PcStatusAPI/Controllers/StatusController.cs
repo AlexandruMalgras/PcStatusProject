@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PcStatusAPI.Components;
 
 namespace PcStatusAPI.Controllers
 {
@@ -6,45 +7,35 @@ namespace PcStatusAPI.Controllers
     [ApiController]
     public class StatusController : ControllerBase
     {
-        private readonly CpuStatusData cpuStatusData;
+        private readonly CpuStatus cpuStatus;
 
-        public StatusController(CpuStatusData statusData)
+        public StatusController()
         {
-            this.cpuStatusData = statusData;
+            this.cpuStatus = CpuStatus.Instance;
         }
 
         [HttpGet("cpu-name")]
         public async Task<IActionResult> GetCpuName()
         {
-            await cpuStatusData.UpdateCpuNameAsync();
-            return Ok(new { name = cpuStatusData.CpuName });
+            return Ok(new { name = cpuStatus.CpuName });
         }
 
         [HttpGet("cpu-temperature")]
         public async Task<IActionResult> GetCpuTemperature()
         {
-            await cpuStatusData.UpdateCpuTemperatureAsync();
-            return Ok(new { temperature = cpuStatusData.CpuTemperature });
+            return Ok(new { temperature = cpuStatus.CpuTemperature });
         }
 
         [HttpGet("cpu-load")]
         public async Task<IActionResult> GetCpuLoad()
         {
-            await cpuStatusData.UpdateCpuLoadAsync();
-
-            while (cpuStatusData.CpuLoad == 0)
-            {
-                await cpuStatusData.UpdateCpuLoadAsync();
-            }
-
-            return Ok(new { load = cpuStatusData.CpuLoad });
+            return Ok(new { load = cpuStatus.CpuLoad });
         }
 
         [HttpGet("cpu-speed")]
         public async Task<IActionResult> GetCpuSpeed()
         {
-            await cpuStatusData.UpdateCpuSpeedAsync();
-            return Ok(new { speed = cpuStatusData.CpuSpeed });
+            return Ok(new { speed = cpuStatus.CpuSpeed });
         }
     }
 }

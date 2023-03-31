@@ -1,25 +1,43 @@
 ﻿using OpenHardwareMonitor.Hardware;
+using PcStatusAPI.Components;
 using System.Linq;
 using System.Management;
 
 namespace PcStatusAPI
 {
-    public class CpuStatusData
+    public class ComputerStatusService : BackgroundService
     {
         private Computer computer;
         private SemaphoreSlim semaphore;
+        private CpuStatus cpuStatus;
 
-        public double? CpuTemperature { get; set; }
-        public double? CpuLoad { get; set; }
-        public double? CpuSpeed { get; set; }
-        public string CpuName { get; set; }
-
-        public CpuStatusData() 
+        public ComputerStatusService() 
         {
             this.computer = new Computer();
             this.computer.CPUEnabled = true;
 
             semaphore = new SemaphoreSlim(1, 1);
+
+            cpuStatus = CpuStatus.Instance;
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(1000);
+
+                await this.UpdateCpuNameAsync();
+                await this.UpdateCpuTemperatureAsync();
+                await this.UpdateCpuLoadAsync();
+
+                while (cpuStatus.CpuLoad == 0)
+                {
+                    await this.UpdateCpuLoadAsync();
+                }
+
+                await this.UpdateCpuSpeedAsync();
+            }
         }
 
         public async Task UpdateCpuTemperatureAsync()
@@ -37,8 +55,8 @@ namespace PcStatusAPI
 
                     ISensor? temperatureSensor = cpu.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Temperature);
 
-                    this.CpuTemperature = (temperatureSensor?.Value - 32) * 5 / 9;
-                    this.CpuTemperature = double.Parse(CpuTemperature?.ToString(".0"));
+                    this.cpuStatus.CpuTemperature = (temperatureSensor?.Value - 32) * 5 / 9;
+                    this.cpuStatus.CpuTemperature = double.Parse(this.cpuStatus.CpuTemperature?.ToString(".0"));
                 }
             }
             finally
@@ -63,7 +81,7 @@ namespace PcStatusAPI
 
                     ISensor? loadSensor = cpu.Sensors.LastOrDefault(h => h.SensorType == SensorType.Load);
 
-                    this.CpuLoad = double.Parse(loadSensor.Value?.ToString(".0"));
+                    this.cpuStatus.CpuLoad = double.Parse(loadSensor.Value?.ToString(".0"));
                 }
             }
             finally
@@ -88,15 +106,15 @@ namespace PcStatusAPI
 
                     ISensor[] speedSensors = cpu.Sensors.Where(h => h.SensorType == SensorType.Clock).ToArray();
 
-                    this.CpuSpeed = 0;
+                    this.cpuStatus.CpuSpeed = 0;
 
                     for (int i = 0; i < speedSensors.Length; i++)
                     {
-                        this.CpuSpeed += speedSensors[i].Value;
+                        this.cpuStatus.CpuSpeed += speedSensors[i].Value;
                     }
 
-                    this.CpuSpeed = CpuSpeed / 8 / 1000;
-                    this.CpuSpeed = double.Parse(CpuSpeed?.ToString(".00"));
+                    this.cpuStatus.CpuSpeed = this.cpuStatus.CpuSpeed / 8 / 1000;
+                    this.cpuStatus.CpuSpeed = double.Parse(this.cpuStatus.CpuSpeed?.ToString(".00"));
                 }
             }
             finally
@@ -117,7 +135,7 @@ namespace PcStatusAPI
 
                 if (cpu != null)
                 {
-                    this.CpuName = cpu.Name;
+                    this.cpuStatus.CpuName = cpu.Name;
                 }
             }
             finally

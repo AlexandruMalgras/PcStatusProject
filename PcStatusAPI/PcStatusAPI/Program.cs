@@ -1,6 +1,7 @@
 using PcStatusAPI;
 using Lib.AspNetCore.ServerSentEvents;
 using Microsoft.Extensions.Options;
+using PcStatusAPI.Azure;
 
 const string allowedOrigins = "origin";
 
@@ -12,7 +13,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<CpuStatusData>();
+builder.Services.AddHostedService<ComputerStatusService>();
+builder.Services.AddHostedService<DataUploaderService>();
 builder.Services.AddCors((options) =>
 {
     options.AddPolicy(allowedOrigins, (policy) =>
