@@ -1,4 +1,4 @@
-# Computer Status V 1.0
+# Computer Status V 1.1
 
 Computer Status is a project that retrieves hardware data from the computer and displays it on a website. The project is built using C#, .Net Core, REST API, HTML, CSS, and JavaScript. 
 
