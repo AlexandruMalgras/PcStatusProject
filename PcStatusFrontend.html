@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Test Frontend</title>
-    <link rel="stylesheet" type="text/css" href="./CpuStyle.css">
+    <link rel="stylesheet" type="text/css" href="./styles/CpuStyle.css">
 </head>
 <body>
     <div id="CpuName">
@@ -22,8 +22,9 @@
                 <label id="cpu-load-label"></label>
             </div>
         </div>
-        <div id="CpuLoadGraph">
-
+        <div id="CpuLoadKeyData">
+            <label id="max-load-description">Maximum CPU load recorded</label>
+            <label id="max-load-label">load</label>
         </div>
     </div>
 
@@ -38,8 +39,9 @@
                 <label id="cpu-temperature-label"></label>
             </div>
         </div>
-        <div id="CpuTemperatureGraph">
-
+        <div id="CpuTemperatureKeyData">
+            <label id="max-temperature-description">Maximum CPU temperature recorded</label>
+            <label id="max-temperature-label">temperature</label>
         </div>
     </div>
 
@@ -54,15 +56,27 @@
                 <label id="cpu-speed-label"></label>
             </div>
         </div>
-        <div id="CpuSpeedGraph">
-
+        <div id="CpuSpeedKeyData">
+            <label id="max-speed-description">Maximum CPU Speed recorded</label>
+            <label id="max-speed-label">speed</label>
         </div>
     </div>
 
-    <script src="./CpuStatusUpdate.js"></script>
+    <script src="./scripts/CpuStatusUpdate.js"></script>
+    <script src="./scripts/AzureKeyDataUpdate.js"></script>
+
     <script>UpdateName();</script>
     <script>setInterval(UpdateTemperature, 3000);</script>
     <script>setInterval(UpdateLoad, 3000);</script>
     <script>setInterval(UpdateSpeed, 3000);</script>
+
+    <script>UpdateMaxTemperature();</script>
+    <script>setInterval(UpdateMaxTemperature, 60000);</script>
+
+    <script>UpdateMaxLoad();</script>
+    <script>setInterval(UpdateMaxLoad, 60000);</script>
+
+    <script>UpdateMaxSpeed();</script>
+    <script>setInterval(UpdateMaxSpeed, 60000);</script>
 </body>
 </html>

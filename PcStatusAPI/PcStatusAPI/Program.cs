@@ -15,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<ComputerStatusService>();
 builder.Services.AddHostedService<DataUploaderService>();
+builder.Services.AddHostedService<AzureKeyDataCollectorService>();
 builder.Services.AddCors((options) =>
 {
     options.AddPolicy(allowedOrigins, (policy) =>

@@ -4,7 +4,7 @@ body {
 
 #CpuName {
     height: 50px;
-    width: 500px;
+    width: 550px;
     display: flex;
     align-items: center;
     text-align: left;
@@ -27,7 +27,7 @@ body {
 
 #CpuLoad {
     height: 100px;
-    width: 511px;
+    width: 561px;
     display: flex;
     flex-direction: row;
     margin: 5px;
@@ -67,29 +67,17 @@ body {
     top: -42px;
 }
 
-#CpuLoadGraph {
-    background-color: #232327;
-    width: 65%;
-    display: flex;
-}
-
 #CpuTemperature {
     height: 100px;
-    width: 511px;
+    width: 561px;
     display: flex;
     flex-direction: row;
     margin: 5px;
 }
 
-#CpuTemperatureGraph {
-    background-color: #232327;
-    width: 65%;
-    display: flex;
-}
-
 #CpuSpeed {
     height: 100px;
-    width: 511px;
+    width: 561px;
     display: flex;
     flex-direction: row;
     margin: 5px;
@@ -102,7 +90,7 @@ body {
 }
 
 #CpuLoadStatistics, #CpuTemperatureStatistics, #CpuSpeedStatistics {
-    width: 45%;
+    width: 41%;
     display: block;
 }
 
@@ -113,8 +101,21 @@ body {
     color: #f4f4f6;
 }
 
-#CpuLoadGraph, #CpuTemperatureGraph, #CpuSpeedGraph {
+#CpuLoadKeyData, #CpuTemperatureKeyData, #CpuSpeedKeyData {
     background-color: #232327;
-    width: 55%;
+    width: 59%;
     display: flex;
+    flex-direction: column;
+}
+
+#max-load-description, #max-temperature-description, #max-speed-description {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+#max-load-label, #max-temperature-label, #max-speed-label {
+    padding-left: 20px;
+    padding-top: 21px;
+    font-size: 24px;
+    color: #f4f4f6;
 }
