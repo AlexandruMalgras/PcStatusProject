@@ -25,7 +25,7 @@ namespace PcStatusAPI.Azure
                     double? cpuLoad = cpuStatus.CpuLoad;
                     double? cpuSpeed = cpuStatus.CpuSpeed;
 
-                    await this.UploadCpuData(DateTime.Now, cpuName, cpuTemperature, cpuLoad, cpuSpeed);
+                    await this.UploadCpuDataAsync(DateTime.Now, cpuName, cpuTemperature, cpuLoad, cpuSpeed);
                     await Task.Delay(5000);
                 }
                 catch
@@ -35,7 +35,7 @@ namespace PcStatusAPI.Azure
             }
         }
 
-        public async Task UploadCpuData(DateTime time, string? cpuName, double? temperature, double? load, double? speed)
+        public async Task UploadCpuDataAsync(DateTime time, string? cpuName, double? temperature, double? load, double? speed)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace PcStatusAPI.Azure
                 };
 
                 var result = await azureConfiguration.Container.CreateItemAsync(cpuData, new PartitionKey(cpuData.id));
-                Console.WriteLine("Uploaded to Azure Cosmos DB: \"ID\": " + cpuData.id);
+                Console.WriteLine("Uploaded to Azure Cosmos DB: \"ID\": " + "T: " + temperature + " L: " + load + " S: " + speed);
             }
             catch (Exception e)
             {

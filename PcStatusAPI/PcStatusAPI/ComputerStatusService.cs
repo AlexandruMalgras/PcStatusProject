@@ -25,18 +25,12 @@ namespace PcStatusAPI
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(1000);
-
                 await this.UpdateCpuNameAsync();
                 await this.UpdateCpuTemperatureAsync();
                 await this.UpdateCpuLoadAsync();
-
-                while (cpuStatus.CpuLoad == 0)
-                {
-                    await this.UpdateCpuLoadAsync();
-                }
-
                 await this.UpdateCpuSpeedAsync();
+
+                await Task.Delay(1500);
             }
         }
 
@@ -81,7 +75,10 @@ namespace PcStatusAPI
 
                     ISensor? loadSensor = cpu.Sensors.LastOrDefault(h => h.SensorType == SensorType.Load);
 
-                    this.cpuStatus.CpuLoad = double.Parse(loadSensor.Value?.ToString(".0"));
+                    if (loadSensor?.Value > 0)
+                    {
+                        this.cpuStatus.CpuLoad = double.Parse(loadSensor.Value?.ToString(".0"));
+                    }
                 }
             }
             finally

@@ -25,15 +25,15 @@ namespace PcStatusAPI.Azure
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await GetMaximumCpuTemperature();
-                await GetMaximumCpuLoad();
-                await GetMaximumCpuSpeed();
+                await GetMaximumCpuTemperatureAsync();
+                await GetMaximumCpuLoadAsync();
+                await GetMaximumCpuSpeedAsync();
 
                 await Task.Delay(60000);
             }
         }
 
-        public async Task GetMaximumCpuTemperature()
+        public async Task GetMaximumCpuTemperatureAsync()
         {
             var query = new QueryDefinition("SELECT MAX(c.CpuTemperature) FROM c");
             var iterator = this.azureConfiguration.Container.GetItemQueryIterator<object>(query);
@@ -57,7 +57,7 @@ namespace PcStatusAPI.Azure
             }
         }
 
-        public async Task GetMaximumCpuLoad()
+        public async Task GetMaximumCpuLoadAsync()
         {
             var query = new QueryDefinition("SELECT MAX(c.CpuLoad) FROM c");
             var iterator = this.azureConfiguration.Container.GetItemQueryIterator<object>(query);
@@ -81,9 +81,9 @@ namespace PcStatusAPI.Azure
             }
         }
 
-        public async Task GetMaximumCpuSpeed()
+        public async Task GetMaximumCpuSpeedAsync()
         {
-            var query = new QueryDefinition("SELECT MAX(c.CpuSpeed) FROM c");
+            var query = new QueryDefinition("SELECT MAX(c.CpuSpeed) FROM c WHERE c.CpuSpeed > 0");
             var iterator = this.azureConfiguration.Container.GetItemQueryIterator<object>(query);
 
             if (iterator.HasMoreResults)
