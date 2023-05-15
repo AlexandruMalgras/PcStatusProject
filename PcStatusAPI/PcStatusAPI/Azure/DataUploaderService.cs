@@ -26,7 +26,7 @@ namespace PcStatusAPI.Azure
                     double? cpuSpeed = cpuStatus.CpuSpeed;
 
                     await this.UploadCpuDataAsync(DateTime.Now, cpuName, cpuTemperature, cpuLoad, cpuSpeed);
-                    await Task.Delay(5000);
+                    await Task.Delay(2000);
                 }
                 catch
                 {

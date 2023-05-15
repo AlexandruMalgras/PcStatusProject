@@ -15,19 +15,19 @@ namespace PcStatusAPI.Controllers
         }
 
         [HttpGet("max-cpu-temperature")]
-        public async Task<IActionResult> GetMaxCpuTemperature()
+        public IActionResult GetMaxCpuTemperature()
         {
             return Ok(new { maxCpuTemperature = azureStatus.MaxCpuTemperature });
         }
 
         [HttpGet("max-cpu-load")]
-        public async Task<IActionResult> GetMaxCpuLoad()
+        public IActionResult GetMaxCpuLoad()
         {
             return Ok(new { maxCpuLoad = azureStatus.MaxCpuLoad });
         }
 
         [HttpGet("max-cpu-speed")]
-        public async Task<IActionResult> GetMaxCpuSpeed()
+        public IActionResult GetMaxCpuSpeed()
         {
             return Ok(new { maxCpuSpeed = azureStatus.MaxCpuSpeed });
         }

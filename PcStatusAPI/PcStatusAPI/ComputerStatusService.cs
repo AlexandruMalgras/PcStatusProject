@@ -30,7 +30,7 @@ namespace PcStatusAPI
                 await this.UpdateCpuLoadAsync();
                 await this.UpdateCpuSpeedAsync();
 
-                await Task.Delay(1500);
+                await Task.Delay(2000);
             }
         }
 

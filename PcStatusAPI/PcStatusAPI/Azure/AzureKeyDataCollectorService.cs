@@ -29,7 +29,7 @@ namespace PcStatusAPI.Azure
                 await GetMaximumCpuLoadAsync();
                 await GetMaximumCpuSpeedAsync();
 
-                await Task.Delay(60000);
+                await Task.Delay(2000);
             }
         }
 
