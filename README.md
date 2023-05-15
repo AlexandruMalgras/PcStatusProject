@@ -20,8 +20,3 @@ The `AzureKeyDataController` is an API controller that handles HTTP requests and
 - `GetMaxCpuSpeed`: Retrieves the maximum recorded CPU speed from Azure Cosmos DB.
 
 Each method calls a synchronous method to retrieve the corresponding data from the `AzureStatus` instance. Once the data is retrieved, the method returns an `Ok` response with the requested data in a JSON object.
-
-## Future Plans
-I have several plans to expand the project in the future. Currently, the application only retrieves data from the computer's CPU, but I plan to include more hardware components in the future.
-
-Furthermore, I plan to record more in-depth data separately on the website. For example, I plan to display details for each core of the CPU, so that users can better understand their computer's performance.
